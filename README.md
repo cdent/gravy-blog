@@ -37,9 +37,9 @@ URLS include:
 
 * /
     * list of available blogs
-* /<blog_title>
+* /{blog_title}
     * summary of recent entries
-* /<blog_title>/<entry_title>
+* /{blog_title}/{entry_title}
     * full display of this
 * /editor
     * On GET retrieves an editor, on POST saves an entry.
