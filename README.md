@@ -30,6 +30,7 @@ The entities are:
     * created date
     * modified date
     * list of tags
+    * content
 
 User information comes from Google's authentication provider.
 
