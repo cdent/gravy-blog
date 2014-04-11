@@ -25,10 +25,10 @@ def teardown_module(module):
     requests_intercept.uninstall()
 
 
-def test_request_root():
+def test_request_home():
     url = 'http://localhost:8000/'
 
     response = requests.get(url)
 
-    # no views yet
-
+    assert response.status_code == 200
+    assert '<h1>Welcome to Gravy Blog</h1>' in response.text
