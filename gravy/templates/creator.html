@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Blog{% endblock %}
+
+{% block header %}
+<h1>Create A New Blog</h1>
+{% endblock %}
+
+{% block main %}
+<form action="/creator" method="POST">
+{% include 'form_presenter.html' %}
+<input type="submit" value="Submit">
+{% endblock %}

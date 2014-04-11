@@ -7,6 +7,28 @@
 {% endblock %}
 
 {% block main %}
+<div class="informer">
+    <p>Hey there. Welcome to Gravy Blog, a simple blog engine built with
+    Django running on top of AppEngine. It's been built to show how I,
+    <a href="http://burningchrome.com">Chris Dent</a>, write code and
+    to explore technologies across the full stack. Time doesn't really
+    allow as much fun and games as I would like.</p>
+    {% if user %}
+    <p>Either read some blogs from the other list or visit your blogs below
+    to create or edit content.</p>
+    <ul class="myblogs">
+        {% for blog in myblogs %}
+        <li><a class="blog" href="{{ blog.title|urlencode }}">
+            {{ blog.title }}
+        </a></li>
+        {% endfor %}
+    </ul>
+    <p><a href="/creator">Create A New Blog</a></p>
+    {% else %}
+    <p>If there are some blogs listed here, you can have a read through
+    them if you like. Or you can create your own by logging in above.</p>
+    {% endif %}
+</div>
 <ul class="blogs">
     {% for blog in blogs %}
     <li><a class="blog" href="{{ blog.title|urlencode }}">

@@ -11,6 +11,8 @@ the place. Used here for brevity.
 
 from google.appengine.ext import ndb
 
+from django.utils.http import urlquote
+
 
 class Blog(ndb.Model):
     """
@@ -18,12 +20,17 @@ class Blog(ndb.Model):
     and some users that are editors on the blog.
     """
     editors = ndb.UserProperty(repeated=True)
+    # XXX: Not immediately obvious how to preserve uniqueness in
+    # title.
     title = ndb.StringProperty(required=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
 
     @classmethod
     def get_one(cls, blog_title):
         return cls.query(cls.title == blog_title).get()
+
+    def get_absolute_url(self):
+        return '/%s' % urlquote(self.title)
 
 
 

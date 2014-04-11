@@ -1,0 +1,7 @@
+<div class="userinfo">
+{% if user %}
+<a title="Sign Out" href="{{ logout_url }}"><i class="fa fa-fw fa-sign-out"></i></a>
+{% else %}
+<a title="Sign In" href="{{ login_url }}"><i class="fa fa-fw fa-sign-in"></i></a>
+{% endif %}
+</div>

@@ -87,3 +87,25 @@ header {
 main {
     padding-left: 1em;
 }
+
+.informer {
+    margin-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    background: yellow;
+    border: thin solid red;
+    border-radius: 5px;
+    float: right;
+    width: 33%;
+}
+
+.userinfo a {
+    font-size: 200%;
+    float: right;
+    color: white;
+    text-decoration: none;
+}
+
+.userinfo a:hover {
+    text-decoration: underline;
+}

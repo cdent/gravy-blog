@@ -76,5 +76,6 @@ Many.
 * Search.
 * Themes, wherein a blog editor can replace the template used for
   the blog with something of their own design.
-* Use a context manager for handling Google user data passed to
-  templates.
+* Use a template context processor for handling Google user data passed to
+  templates and use other ones as well.
+* Take advantage of the fact that a blog can have multiple editors.
