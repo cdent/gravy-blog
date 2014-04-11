@@ -2,6 +2,11 @@
 The primary views for our blog.
 """
 
+import logging
+
+# XXX: We don't want to see this in views, just models.
+from google.appengine.ext import ndb
+
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.shortcuts import render, redirect
@@ -11,11 +16,13 @@ from django.utils.http import urlunquote
 
 from google.appengine.api import users
 
+
 from .models import Blog, Entry
 from .forms import Create, Edit
 
 
 SUMMARY_LIMIT = 10
+LOGGER = logging.getLogger(__name__)
 
 
 @require_safe
@@ -36,12 +43,20 @@ def home(request):
 
 @require_safe
 def summary(request, blog_title):
+    user = users.get_current_user()
+    logout_url = users.create_logout_url('/')
+    login_url = users.create_login_url('/')
+
     blog_title = urlunquote(blog_title)
     blog = Blog.get_one(blog_title)
     if blog is None:
         raise Http404
+
     entries = Entry.get_some(blog.key, limit=SUMMARY_LIMIT)
     return render(request, 'summary.html', {
+        'user': user,
+        'logout_url': logout_url,
+        'login_url': login_url,
         'blog': blog,
         'entries': entries
     })
@@ -63,6 +78,79 @@ def entry(request, blog_title, entry_title):
         'blog': blog,
         'entry': entry
     })
+
+
+@require_http_methods(['POST', 'GET', 'HEAD'])
+def editor(request):
+    user = users.get_current_user()
+
+    if user is None:
+        raise PermissionDenied
+
+    if request.method == 'POST':
+        return edit_entry(request, user)
+    else:
+        # Set up the form for editing.
+        entry_key = request.GET.get('entry')
+        blog_key = request.GET.get('blog')
+        if entry_key:
+            entry = Entry.get_by_id(entry)
+            data = {
+                'blog': entry.blog,
+                'entry': entry_key,
+                'title': entry.title,
+                'content': entry.content,
+                'tags': ', '.join(entry.tags)
+            }
+        elif blog_key:
+            data = {
+                'blog': blog_key,
+            }
+        else:
+            # No blog or entry selected
+            # XXX: This could be much more friendly
+            raise Http404
+
+        form = Edit(initial=data)
+        logout_url = users.create_logout_url('/')
+        login_url = users.create_login_url('/')
+        return render(request, 'editor.html', {
+            'form': form,
+            'user': user,
+            'logout_url': logout_url,
+            'login_url': login_url,
+        })
+
+
+def edit_entry(request, user):
+    form = Edit(request.POST)
+    if form.is_valid():
+        blog = form.cleaned_data['blog']
+        title = form.cleaned_data['title']
+        tags = form.cleaned_data['tags']
+        content = form.cleaned_data['content']
+        entry_key = form.cleaned_data['entry']
+        if entry_key:
+            entry = Entry.get_by_id(entry_key)
+        else:
+            entry = Entry(title=form.cleaned_data['title'],
+                    blog=ndb.Key('Blog', long(blog)))
+        entry.title = title
+        entry.tags = tags
+        entry.content = content
+        entry.editor = user
+        entry.put()
+        return redirect(entry)
+    else:
+        logout_url = users.create_logout_url('/')
+        login_url = users.create_login_url('/')
+        return render(request, 'editor.html', {
+            'form': form,
+            'user': user,
+            'logout_url': logout_url,
+            'login_url': login_url,
+        })
+
 
 @require_http_methods(['POST', 'GET', 'HEAD'])
 def creator(request):

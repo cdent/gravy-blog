@@ -53,3 +53,7 @@ class Entry(ndb.Model):
     def get_some(cls, blog_key, limit=None):
         return (cls.query(cls.blog == blog_key)
                 .order(-Entry.created).fetch(limit))
+
+    def get_absolute_url(self):
+        return '/%s/%s' % (urlquote(self.blog.get().title),
+                urlquote(self.title))

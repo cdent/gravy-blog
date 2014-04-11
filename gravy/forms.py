@@ -24,6 +24,21 @@ class BlogTitleField(forms.CharField):
             raise ValidationError('Blog exists')
 
 
+class TagsField(forms.CharField):
+
+    def to_python(self, value):
+        """
+        Turn a comma separate list into a list.
+        """
+        if not value:
+            return []
+        else:
+            return [item.strip() for item in value.split(',')]
+
+    def validate(self, value):
+        return True
+
+
 class Create(forms.Form):
     """
     A form for creating a blog.
@@ -38,5 +53,7 @@ class Edit(forms.Form):
     A form for creating or editing a blog entry.
     """
     title = forms.CharField(label='Entry Title', required=True, max_length=100)
-    tags = forms.CharField(label='Tags', max_length=100)
+    tags = TagsField(label='Tags', required=False, max_length=100)
     content = forms.CharField(widget=forms.Textarea)
+    entry = forms.CharField(widget=forms.HiddenInput, required=False)
+    blog = forms.CharField(widget=forms.HiddenInput, required=True)

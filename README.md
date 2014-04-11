@@ -79,3 +79,4 @@ Many.
 * Use a template context processor for handling Google user data passed to
   templates and use other ones as well.
 * Take advantage of the fact that a blog can have multiple editors.
+* CSS refactoring to make more DRY. SASS would probably be useful.

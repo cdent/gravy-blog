@@ -81,7 +81,7 @@ def test_blog_summary():
     assert '<h1>Fantastic</h1>' in response.text
     assert '<section class="entries">' in response.text
     assert '<article class="entry">' in response.text
-    assert '<h1>My First Entry</h1>' in response.text
+    assert '<h1><a href="/Fantastic/My%20First%20Entry">My First Entry</a></h1>'in response.text
     assert '<p>What do you know?</p>' in response.text
 
 
@@ -98,7 +98,7 @@ def test_blog_entry():
     response = requests.get(url)
 
     assert response.status_code == 200
-    assert '<h1>Fantastic</h1>' in response.text
+    assert '<h1><a href="/Fantastic">Fantastic</a></h1>' in response.text
     assert '<article class="entry">' in response.text
     assert '<h1>My First Entry</h1>' in response.text
     assert '<p>What do you know?</p>' in response.text
