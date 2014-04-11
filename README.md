@@ -51,6 +51,10 @@ Mistakes
 * Naming the repo `gravy-blog` conflicts with some of the package
   discovery magic that is going on. To get around it, clone the
   repo into a directory named `gravy`.
+* It might have been a mistake to not use something like
+  [Bootstrap](http://getbootstrap.com/) to handle CSS and ensuring
+  goog typography. However I was more interested, in this case, in
+  exploring the raw CSS.
 
 Testing
 =======
