@@ -21,6 +21,11 @@ class Blog(ndb.Model):
     title = ndb.StringProperty(required=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
 
+    @classmethod
+    def get_one(cls, blog_title):
+        return cls.query(cls.title == blog_title).get()
+
+
 
 class Entry(ndb.Model):
     title = ndb.StringProperty(required=True)
@@ -30,3 +35,14 @@ class Entry(ndb.Model):
     content = ndb.TextProperty()
     tags = ndb.StringProperty(repeated=True)
     blog = ndb.KeyProperty(required=True, kind=Blog)
+
+    @classmethod
+    def get_one(cls, blog_key, entry_title):
+        return cls.query(ndb.AND(
+            cls.blog == blog_key,
+            cls.title == entry_title)).get()
+
+    @classmethod
+    def get_some(cls, blog_key, limit=None):
+        return (cls.query(cls.blog == blog_key)
+                .order(-Entry.created).fetch(limit))

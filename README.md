@@ -76,3 +76,5 @@ Many.
 * Search.
 * Themes, wherein a blog editor can replace the template used for
   the blog with something of their own design.
+* Use a context manager for handling Google user data passed to
+  templates.

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{entry.title}} - {{ blog.title }}{% endblock %}
+
+{% block header %}<h1>{{ blog.title }}</h1>{% endblock %}
+
+{% block main %}
+<article class="entry">
+    <h1>{{ entry.title }}</h1>
+    <p>Created {{ entry.created|date:"c" }}</p>
+    <ul class="tags">
+        {% for tag in entry.tags %}
+        <li>{{ tag }}</li>
+        {% endfor %}
+    </ul>
+    <div class="content">
+        {% autoescape off %}
+        {{ entry.content }}
+        {% endautoescape %}
+    </div>
+</article>
+{% endblock %}

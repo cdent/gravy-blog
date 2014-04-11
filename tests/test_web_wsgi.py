@@ -83,3 +83,22 @@ def test_blog_summary():
     assert '<article class="entry">' in response.text
     assert '<h1>My First Entry</h1>' in response.text
     assert '<p>What do you know?</p>' in response.text
+
+
+def test_missing_blog_entry():
+    url = 'http://localhost:8000/Fantastic/NoEntry'
+
+    response = requests.get(url)
+    assert response.status_code == 404
+
+
+def test_blog_entry():
+    url = 'http://localhost:8000/Fantastic/My%20First%20Entry'
+
+    response = requests.get(url)
+
+    assert response.status_code == 200
+    assert '<h1>Fantastic</h1>' in response.text
+    assert '<article class="entry">' in response.text
+    assert '<h1>My First Entry</h1>' in response.text
+    assert '<p>What do you know?</p>' in response.text
