@@ -9,6 +9,9 @@ from django.views.decorators.http import require_safe
 from .models import Blog, Entry
 
 
+SUMMARY_LIMIT = 10
+
+
 @require_safe
 def home(request):
     blogs = Blog.query().fetch()
@@ -20,7 +23,8 @@ def summary(request, blog_title):
     blog = Blog.query(Blog.title == blog_title).get()
     if blog is None:
         raise Http404
-    entries = Entry.query(Entry.blog == blog.key).order(-Entry.created).fetch()
+    entries = (Entry.query(Entry.blog == blog.key)
+            .order(-Entry.created).fetch(SUMMARY_LIMIT))
     return render(request, 'summary.html', {
         'blog': blog,
         'entries': entries
