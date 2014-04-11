@@ -19,6 +19,3 @@ libraries:
 - name: django
   version: "1.4"
 
-inbound_services:
-- warmup
-
