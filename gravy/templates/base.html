@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{{title}}{% endblock %}</title>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet"
+             href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+        <link rel="stylesheet" href="/static/gravy.css">
+        <!--[if lt IE 9]>
+        <script src="/static/html5.js"></script>
+        <![endif]-->
+        {% block morehead %}
+        {% endblock %}
+    </head>
+    <body>
+    <div class="wrapper">
+    <header>
+        {% block header %}
+        <h1>The header!</h1>
+        {% endblock %}
+    </header>
+    <main>
+        {% block main %}
+        <h1>Oh hi</h1>
+        {% endblock %}
+    </main>
+    </div>
+    <footer>
+        <a class="logo" href="http://peermore.com/"><img src="http://peermore.com/peermore2.png" alt="peermore"></a>
+        <ul>
+            <li><a href="/">Home</a></li>
+        </ul>
+        <ul class="subfooter">
+            <li>Something clever ought to go here.</li>
+        </ul>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
+    <script>
+    jQuery(document).ready(function() {
+            jQuery(".modified").timeago();
+    });
+    </script>
+    {% block scripts %}
+    {% endblock %}
+    </body>
+</html>

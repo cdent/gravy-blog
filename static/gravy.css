@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+
+/* override normalize */
+h1 {
+    margin: 0;
+}
+
+/* override browser */
+ul {
+    margin: 0;
+}
+
+
+/* Uses
+ * http://www.cssstickyfooter.com/using-sticky-footer-code.html
+ */
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+}
+
+main {
+    overflow: auto;
+    padding-bottom: 150px;
+}
+
+footer {
+    position: relative;
+    margin-top: -150px;
+    height: 150px;
+    clear: both;
+    background: black;
+}
+
+footer img {
+    max-height: 145px; /* making it 150 throws off the sticky footer */
+}
+
+footer .logo {
+    float: right;
+    display: inline-block;
+    height: 0;
+}
+
+body:before {
+    content:"";
+    height:100%;
+    float:left;
+    width:0;
+    margin-top:-32767px;/
+}
+
