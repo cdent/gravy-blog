@@ -10,6 +10,7 @@ def data_setup():
     databed.activate()
     databed.init_datastore_v3_stub()
     databed.init_memcache_stub()
+    databed.init_user_stub()
     return databed
 
 
