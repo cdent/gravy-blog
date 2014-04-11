@@ -2,10 +2,16 @@
 
 {% block title %}Welcome{% endblock %}
 
-{% block main %}
-
+{% block header %}
 <h1>Welcome to Gravy Blog</h1>
+{% endblock %}
 
-<p>Just wanted to say a bit more about this.</p>
-
+{% block main %}
+<ul class="blogs">
+    {% for blog in blogs %}
+    <li><a class="blog" href="{{ blog.title|urlencode }}">
+        {{ blog.title }}
+    </a></li>
+    {% endfor %}
+</ul>
 {% endblock %}

@@ -7,7 +7,8 @@ HTTP_HOST = os.environ.get('HTTP_HOST')
 
 PROJDIR = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = not APPENGINE_PRODUCTION
+#DEBUG = not APPENGINE_PRODUCTION
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
