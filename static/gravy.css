@@ -16,7 +16,6 @@ ul {
 /* Uses
  * http://www.cssstickyfooter.com/using-sticky-footer-code.html
  */
-
 html, body {
     height: 100%;
 }
@@ -27,7 +26,7 @@ html, body {
 
 main {
     overflow: auto;
-    padding-bottom: 150px;
+    padding: 50px 1em 150px 1em;
 }
 
 footer {
@@ -35,19 +34,13 @@ footer {
     margin-top: -150px;
     height: 150px;
     clear: both;
-    background: black;
 }
 
 footer img {
     max-height: 145px; /* making it 150 throws off the sticky footer */
 }
 
-footer .logo {
-    float: right;
-    display: inline-block;
-    height: 0;
-}
-
+/* opera fix */
 body:before {
     content:"";
     height:100%;
@@ -56,3 +49,41 @@ body:before {
     margin-top:-32767px;/
 }
 
+footer, header {
+    background: black;
+    color: white;
+    width: 100%;
+}
+
+footer .logo {
+    float: right;
+}
+
+footer ul {
+    padding-top: 1em;
+    padding-left: 1em;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer li {
+    display: inline;
+}
+
+header {
+    height: 50px;
+    position: fixed;
+    top: 0;
+    padding: 10px 1em 0 1em;
+}
+
+main {
+    padding-left: 1em;
+}
