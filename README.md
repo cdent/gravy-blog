@@ -52,6 +52,15 @@ Mistakes
   discovery magic that is going on. To get around it, clone the
   repo into a directory named `gravy`.
 
+Testing
+=======
+
+[py.test](http://pytest.org/latest/) is used to drive tests in the
+`tests` directory. It and additional testing requirements are in
+`test-requirements.txt`.
+
+A `Makefile` is provided with a `test` target
+
 Future Possibilities
 ====================
 
