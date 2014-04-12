@@ -72,7 +72,7 @@ def test_blog_summary():
     entry = Entry(title = 'My First Entry',
             editor = user_alpha,
             blog = blog.key)
-    entry.content = '<p>What do you know?</p>'
+    entry.content = 'What do you know?'
     entry.tags = ['firstpost']
     entry.put()
 
