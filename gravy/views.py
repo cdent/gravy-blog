@@ -115,6 +115,7 @@ def editor(request):
 
             data = {
                 'entry': entry_key,
+                'blog': blog.key.id,
                 'title': entry.title,
                 'content': entry.content,
                 'tags': ', '.join(entry.tags)

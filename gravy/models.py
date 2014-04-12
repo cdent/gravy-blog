@@ -13,6 +13,8 @@ from google.appengine.ext import ndb
 
 from django.utils.http import urlquote
 
+from .render import render
+
 
 class Blog(ndb.Model):
     """
@@ -57,3 +59,7 @@ class Entry(ndb.Model):
     def get_absolute_url(self):
         return '/%s/%s' % (urlquote(self.blog.get().title),
                 urlquote(self.title))
+
+    @property
+    def html(self):
+        return render(self.content)

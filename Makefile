@@ -8,3 +8,6 @@ test:
 
 clean:
 	find . -name "*.pyc" | xargs rm || true
+
+addlibs:
+	./addlib.py markdown
