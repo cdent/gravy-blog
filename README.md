@@ -45,8 +45,8 @@ URLS include:
 * /editor
     * On GET retrieves an editor, on POST saves an entry.
 
-Mistakes
-========
+Mistakes and Nastiness
+======================
 
 * Naming the repo `gravy-blog` conflicts with some of the package
   discovery magic that is going on. To get around it, clone the

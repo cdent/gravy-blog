@@ -110,13 +110,15 @@ def editor(request):
             entry = Entry.get_by_id(long(entry_key))
             if entry is None:
                 raise Http404
+
+            blog = entry.blog.get()
+
             data = {
                 'entry': entry_key,
                 'title': entry.title,
                 'content': entry.content,
                 'tags': ', '.join(entry.tags)
             }
-            blog = entry.blog.get()
         elif blog_key:
             data = {
                 'blog': blog_key,
@@ -142,6 +144,22 @@ def editor(request):
 
 
 def edit_entry(request, user):
+    """
+    Edit or delete a single blog entry.
+    """
+
+    # If we've been asked to delete handled that.
+    delete = request.POST.get('delete')
+    if delete:
+        entry = Entry.get_by_id(long(request.POST.get('entry')))
+        blog = entry.blog.get()
+        if user not in blog.editors:
+            raise PermissionDenied
+
+        entry.key.delete()
+        return redirect(blog)
+
+    # Otherwise treat this POST as an edit form 
     form = Edit(request.POST)
     if form.is_valid():
         blog = form.cleaned_data['blog']

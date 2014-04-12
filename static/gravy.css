@@ -99,9 +99,12 @@ main {
     width: 33%;
 }
 
-.userinfo a {
+.userinfo {
     font-size: 200%;
     float: right;
+}
+
+.userinfo a {
     color: white;
     text-decoration: none;
 }
@@ -118,3 +121,13 @@ header h1 a {
 header h1 a:hover {
     text-decoration: underline;
 }
+
+#delete_button {
+    position: absolute;
+    left: -999px;
+}
+
+.delete-button:hover {
+    cursor: pointer;
+}
+

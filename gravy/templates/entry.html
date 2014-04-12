@@ -7,6 +7,17 @@
 <div class="userinfo">
     <a alt="edit entry" href="/editor?entry={{entry.key.id}}"><i class="fa fa-fw fa-pencil-square"></i></a>
 </div>
+<div class="userinfo">
+    <form id="delete-form" action="/editor" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="entry" value="{{ entry.key.id }}">
+        <input type="hidden" name="delete" value="1">
+        <button id="delete_button" name="submit" type="submit" value="submit"></button>
+        <label class="delete-button" for="delete_button">
+        <i class="fa fa-fw fa-trash-o"></i>
+        </label>
+    </form>
+</div>
 {% endif %}
 <h1><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h1>
 {% endblock %}
@@ -26,4 +37,7 @@
         {% endautoescape %}
     </div>
 </article>
+{% endblock %}
+{% block scripts %}
+<script src="/static/deleter.js"></script>
 {% endblock %}
