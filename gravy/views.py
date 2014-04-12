@@ -19,7 +19,7 @@ from .models import Blog, Entry
 from .forms import Create, Edit
 
 
-SUMMARY_LIMIT = 10
+SUMMARY_LIMIT = 5
 LOGGER = logging.getLogger(__name__)
 
 

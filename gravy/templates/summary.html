@@ -15,20 +15,11 @@
 {% block main %}
 <section class="entries">
     {% for entry in entries %}
-    <article class="entry">
-        <h1><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h1>
-        <p>Created {{ entry.created|date:"c" }}</p>
-        <ul class="tags">
-            {% for tag in entry.tags %}
-            <li>{{ tag }}</li>
-            {% endfor %}
-        </ul>
-        <div class="content">
-            {% autoescape off %}
-            {{ entry.html }}
-            {% endautoescape %}
-        </div>
-    </article>
+    {% include 'article.html' %}
     {% endfor %}
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/summary.js"></script>
 {% endblock %}

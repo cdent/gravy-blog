@@ -1,0 +1,19 @@
+<article class="entry">
+    <h1 class="entrytitle">
+        <a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a>
+    </h1>
+    <p class="created">
+    Created <span class="datetime" title="{{ entry.created|date:"c" }}">
+        {{ entry.created|date:"c" }}</span>
+    </p>
+    <ul class="tags">
+        {% for tag in entry.tags %}
+        <li>{{ tag }}</li>
+        {% endfor %}
+    </ul>
+    <div class="content">
+        {% autoescape off %}
+        {{ entry.html }}
+        {% endautoescape %}
+    </div>
+</article>

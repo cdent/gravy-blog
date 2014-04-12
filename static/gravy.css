@@ -145,6 +145,61 @@ header h1 a:hover {
     color: red;
 }
 
+.entrytitle {
+    font-size: 2.5em;
+}
+
+.entrytitle a {
+    text-decoration: none;
+    color: #2F3F4F;
+}
+
+.entrytitle a:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.created {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-style: italic;
+    font-size: 75%;
+}
+
+ul.tags {
+    margin-bottom: 1em;
+    padding-left: 0;
+}
+
+ul.tags:before {
+    content: "tags: ";
+}
+
+section {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+section .content {
+    padding-left: 1em;
+    padding-right: 1em;
+    display: none;
+}
+
+.tags li {
+    display: inline;
+    list-style-type: none;
+}
+
+.entrycontrol {
+    position: absolute;
+    left: 5px;
+}
+
+.entrycontrol:hover {
+    cursor: pointer;
+}
+
 @media screen and (max-width: 600px) {
     .informer {
         float: none;
