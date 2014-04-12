@@ -44,13 +44,15 @@ def home(request):
 @require_safe
 def summary(request, blog_title):
     user = users.get_current_user()
-    logout_url = users.create_logout_url('/')
-    login_url = users.create_login_url('/')
 
     blog_title = urlunquote(blog_title)
     blog = Blog.get_one(blog_title)
     if blog is None:
         raise Http404
+
+    url = blog.get_absolute_url()
+    logout_url = users.create_logout_url(url)
+    login_url = users.create_login_url(url)
 
     entries = Entry.get_some(blog.key, limit=SUMMARY_LIMIT)
     return render(request, 'summary.html', {
@@ -74,7 +76,18 @@ def entry(request, blog_title, entry_title):
     if entry is None:
         raise Http404
 
+    user = users.get_current_user()
+    url = entry.get_absolute_url()
+    logout_url = users.create_logout_url(url)
+    login_url = users.create_login_url(url)
+
+    edit = user in blog.editors
+
     return render(request, 'entry.html', {
+        'edit': edit,
+        'user': user,
+        'logout_url': logout_url,
+        'login_url': login_url,
         'blog': blog,
         'entry': entry
     })
@@ -94,22 +107,28 @@ def editor(request):
         entry_key = request.GET.get('entry')
         blog_key = request.GET.get('blog')
         if entry_key:
-            entry = Entry.get_by_id(entry)
+            entry = Entry.get_by_id(long(entry_key))
+            if entry is None:
+                raise Http404
             data = {
-                'blog': entry.blog,
                 'entry': entry_key,
                 'title': entry.title,
                 'content': entry.content,
                 'tags': ', '.join(entry.tags)
             }
+            blog = entry.blog.get()
         elif blog_key:
             data = {
                 'blog': blog_key,
             }
+            blog = Blog.get_by_id(long(blog_key))
         else:
             # No blog or entry selected
             # XXX: This could be much more friendly
             raise Http404
+
+        if user not in blog.editors:
+            raise PermissionDenied
 
         form = Edit(initial=data)
         logout_url = users.create_logout_url('/')
@@ -126,12 +145,16 @@ def edit_entry(request, user):
     form = Edit(request.POST)
     if form.is_valid():
         blog = form.cleaned_data['blog']
+
+        if user not in Blog.get_by_id(long(blog)).editors:
+            raise PermissionDenied
+
         title = form.cleaned_data['title']
         tags = form.cleaned_data['tags']
         content = form.cleaned_data['content']
         entry_key = form.cleaned_data['entry']
         if entry_key:
-            entry = Entry.get_by_id(entry_key)
+            entry = Entry.get_by_id(long(entry_key))
         else:
             entry = Entry(title=form.cleaned_data['title'],
                     blog=ndb.Key('Blog', long(blog)))

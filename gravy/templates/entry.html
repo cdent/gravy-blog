@@ -2,7 +2,14 @@
 
 {% block title %}{{entry.title}} - {{ blog.title }}{% endblock %}
 
-{% block header %}<h1><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h1>{% endblock %}
+{% block header %}
+{% if edit %}
+<div class="userinfo">
+    <a alt="edit entry" href="/editor?entry={{entry.key.id}}"><i class="fa fa-fw fa-pencil-square"></i></a>
+</div>
+{% endif %}
+<h1><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h1>
+{% endblock %}
 
 {% block main %}
 <article class="entry">
