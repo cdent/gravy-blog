@@ -12,10 +12,11 @@
     Django running on top of AppEngine. It's been built to show how I,
     <a href="http://burningchrome.com">Chris Dent</a>, write code and
     to explore technologies across the full stack. Time doesn't really
-    allow as much fun and games as I would like.</p>
+    allow as much fun and games as I would like but there's a stab at a
+    fair bit. If you have been granted access, the code is <a href="https://github.com/cdent/gravy-blog">on GitHub</a>.</p>
     {% if user %}
     <p>Either read some blogs from the other list or visit your blogs below
-    to create or edit content.</p>
+    to create or edit content (in Markdown).</p>
     <ul class="myblogs">
         {% for blog in myblogs %}
         <li><a class="blog" href="{{ blog.title|urlencode }}">
