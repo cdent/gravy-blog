@@ -25,7 +25,8 @@
 {% block main %}
 <article class="entry">
     <h1>{{ entry.title }}</h1>
-    <p>Created {{ entry.created|date:"c" }}</p>
+    <p>Created <span class="datetime" title="{{ entry.created|date:"c" }}">
+        {{ entry.created|date:"c" }}</span></p>
     <ul class="tags">
         {% for tag in entry.tags %}
         <li>{{ tag }}</li>

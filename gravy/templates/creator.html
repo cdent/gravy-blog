@@ -7,7 +7,15 @@
 {% endblock %}
 
 {% block main %}
+<div class="informer">
+    <p>Use this form to create a new blog. Just type a title
+    and hit return. You will be added as an editor for the blog.
+    When you visit its page you will see a button to add an entry.
+    When you visit individual pages you will see buttons to edit
+    or delete that entry.</p>
+</div>
+
 <form action="/creator" method="POST">
 {% include 'form_presenter.html' %}
-<input type="submit" value="Submit">
+<input type="submit" value="Create">
 {% endblock %}

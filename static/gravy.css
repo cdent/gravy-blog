@@ -28,7 +28,8 @@ html, body {
 
 main {
     overflow: auto;
-    padding: 50px 1em 150px 1em;
+    padding: 66px 1em 150px 1em;
+    color: #2F3F4F;
 }
 
 footer {
@@ -39,7 +40,10 @@ footer {
 }
 
 footer img {
-    max-height: 145px; /* making it 150 throws off the sticky footer */
+    max-height: 50px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 /* opera fix */
@@ -52,7 +56,9 @@ body:before {
 }
 
 footer, header {
-    background: black;
+    background: #2F3F4F;
+    background: -webkit-linear-gradient(left, #2F3F4F, black);
+    background: linear-gradient(to right, #2F3F4F 50%, black 100%);
     color: white;
     width: 100%;
 }
@@ -91,7 +97,7 @@ main {
 }
 
 .informer {
-    margin-top: 1em;
+    margin-bottom: 1em;
     padding-left: 1em;
     padding-right: 1em;
     background: yellow;
@@ -132,4 +138,24 @@ header h1 a:hover {
 .delete-button:hover {
     cursor: pointer;
 }
+
+.errorlist {
+    padding-left: 0;
+    list-style-type: none;
+    color: red;
+}
+
+@media screen and (max-width: 600px) {
+    .informer {
+        float: none;
+        width: 100%;
+    }
+
+    header h1 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
 

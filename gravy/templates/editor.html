@@ -7,6 +7,13 @@
 {% endblock %}
 
 {% block main %}
+<div class="informer">
+    <p>Use this form to create or edit a blog entry. Every entry must
+    have a title. Entry content is formatted with
+    <a href="https://daringfireball.net/projects/markdown/basics">Markdown</a>.
+    Optional tags are separated by a comma.
+    </p>
+</div>
 <form action="/editor" method="POST">
 {% include 'form_presenter.html' %}
 <input type="submit" value="Submit">
