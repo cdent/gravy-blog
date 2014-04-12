@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 
 from .models import Blog
 
+
 class BlogTitleField(forms.CharField):
 
     def validate(self, value):
@@ -35,13 +36,14 @@ class TagsField(forms.CharField):
         else:
             return [item.strip() for item in value.split(',')]
 
+    # XXX: Must we set our own validator if we use to_python?
     def validate(self, value):
         return True
 
 
 class Create(forms.Form):
     """
-    A form for creating a blog.
+    A form for creating a new blog.
     """
     title = BlogTitleField(label='Blog Title',
             required=True,

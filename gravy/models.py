@@ -5,7 +5,7 @@ automatic caching and highly resilient storage.
 We're storing UserProperties directly, which is not considered
 entirely safe because there is a chance a user will change
 their email address. AppEngine documentation simultaneously
-warns about this problems and then uses the technique all over
+warns about this problem and then uses the technique all over
 the place. Used here for brevity.
 """
 
@@ -35,8 +35,10 @@ class Blog(ndb.Model):
         return '/%s' % urlquote(self.title)
 
 
-
 class Entry(ndb.Model):
+    """
+    A single blog entry.
+    """
     title = ndb.StringProperty(required=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
     modified = ndb.DateTimeProperty(auto_now=True)

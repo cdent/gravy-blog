@@ -13,9 +13,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.http import require_safe, require_http_methods
 from django.utils.http import urlunquote
 
-
 from google.appengine.api import users
-
 
 from .models import Blog, Entry
 from .forms import Create, Edit
@@ -27,6 +25,9 @@ LOGGER = logging.getLogger(__name__)
 
 @require_safe
 def home(request):
+    """
+    Home page of the app, lists all the blogs.
+    """
     user = users.get_current_user()
     logout_url = users.create_logout_url('/')
     login_url = users.create_login_url('/')
@@ -43,6 +44,9 @@ def home(request):
 
 @require_safe
 def summary(request, blog_title):
+    """
+    Lists recent entries in the requested blog.
+    """
     user = users.get_current_user()
 
     blog_title = urlunquote(blog_title)
@@ -66,6 +70,11 @@ def summary(request, blog_title):
 
 @require_safe
 def entry(request, blog_title, entry_title):
+    """
+    Displays a single blog entry. If the current
+    user can edit they are presented with additional
+    controls.
+    """
     blog_title = urlunquote(blog_title)
     entry_title = urlunquote(entry_title)
     blog = Blog.get_one(blog_title)
@@ -95,13 +104,16 @@ def entry(request, blog_title, entry_title):
 
 @require_http_methods(['POST', 'GET', 'HEAD'])
 def editor(request):
+    """
+    GET an editor or POST an edit.
+    """
     user = users.get_current_user()
 
     if user is None:
         raise PermissionDenied
 
     if request.method == 'POST':
-        return edit_entry(request, user)
+        return _edit_entry(request, user)
     else:
         # Set up the form for editing.
         entry_key = request.GET.get('entry')
@@ -144,11 +156,10 @@ def editor(request):
         })
 
 
-def edit_entry(request, user):
+def _edit_entry(request, user):
     """
     Edit or delete a single blog entry.
     """
-
     # If we've been asked to delete handled that.
     delete = request.POST.get('delete')
     if delete:
@@ -160,7 +171,7 @@ def edit_entry(request, user):
         entry.key.delete()
         return redirect(blog)
 
-    # Otherwise treat this POST as an edit form 
+    # Otherwise treat this POST as an edit form
     form = Edit(request.POST)
     if form.is_valid():
         blog = form.cleaned_data['blog']
@@ -196,13 +207,17 @@ def edit_entry(request, user):
 
 @require_http_methods(['POST', 'GET', 'HEAD'])
 def creator(request):
+    """
+    GET a form to create a blog or POST the creation
+    of the blog.
+    """
     user = users.get_current_user()
 
     if user is None:
         raise PermissionDenied
 
     if request.method == 'POST':
-        return create_blog(request, user)
+        return _create_blog(request, user)
     else:
         form = Create()
         logout_url = users.create_logout_url('/')
@@ -214,7 +229,12 @@ def creator(request):
             'login_url': login_url,
         })
 
-def create_blog(request, user):
+
+def _create_blog(request, user):
+    """
+    Create a single blog if provided form is
+    valid.
+    """
     form = Create(request.POST)
     if form.is_valid():
         title = form.cleaned_data['title']
@@ -230,4 +250,3 @@ def create_blog(request, user):
             'logout_url': logout_url,
             'login_url': login_url,
         })
-

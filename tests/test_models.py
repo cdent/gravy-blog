@@ -1,12 +1,13 @@
+"""
+Simple tests of the models, to get the working.
+"""
 
-import os
 import pytest
 
 from gravy.models import Blog, Entry
 
 from google.appengine.api import users
 from google.appengine.ext.ndb.model import datastore_errors
-from google.appengine.ext.ndb import Key
 
 from .fixtures import data_setup, data_teardown
 
@@ -15,7 +16,7 @@ def setup_module(module):
     module.user_alpha = users.User(email='alpha@example.com')
     module.user_beta = users.User(email='beta@example.com')
     module.testbed = data_setup()
-   
+
 
 def teardown_module(module):
     data_teardown(testbed)
@@ -49,9 +50,9 @@ def test_entry_in_blog():
         entry = Entry()
         entry.put()
 
-    entry = Entry(title = entry_title,
-            editor = user_alpha,
-            blog = blog.key)
+    entry = Entry(title=entry_title,
+            editor=user_alpha,
+            blog=blog.key)
 
     entry.content = content
     entry.tags = tags

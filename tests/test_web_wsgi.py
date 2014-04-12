@@ -16,11 +16,13 @@ from gravy.models import Blog, Entry
 from .fixtures import data_setup, data_teardown
 
 
-
 def setup_module(module):
     module.testbed = data_setup()
     requests_intercept.install()
-    def app_fn(): return app
+
+    def app_fn():
+        return app
+
     wsgi_intercept.add_wsgi_intercept('localhost', 8000, app_fn)
 
     module.user_alpha = users.User(email='alpha@example.com')
@@ -43,7 +45,7 @@ def test_request_home():
     assert '<a class="blog"' not in response.text
 
     blog = Blog(editors=[user_alpha], title=title)
-    blog_key = blog.put()
+    blog.put()
     response = requests.get(url)
 
     assert response.status_code == 200
@@ -69,9 +71,9 @@ def test_blog_summary():
     assert '<article class="entry">' not in response.text
 
     blog = Blog.query(Blog.title == 'Fantastic').get()
-    entry = Entry(title = 'My First Entry',
-            editor = user_alpha,
-            blog = blog.key)
+    entry = Entry(title='My First Entry',
+            editor=user_alpha,
+            blog=blog.key)
     entry.content = 'What do you know?'
     entry.tags = ['firstpost']
     entry.put()
@@ -81,7 +83,8 @@ def test_blog_summary():
     assert '<h1>Fantastic</h1>' in response.text
     assert '<section class="entries">' in response.text
     assert '<article class="entry">' in response.text
-    assert '<h1><a href="/Fantastic/My%20First%20Entry">My First Entry</a></h1>'in response.text
+    assert ('<h1><a href="/Fantastic/My%20First%20Entry">My First Entry</a></h1>'
+            in response.text)
     assert '<p>What do you know?</p>' in response.text
 
 
