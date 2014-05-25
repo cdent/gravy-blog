@@ -6,6 +6,10 @@ that's what goes on potatoes to make them tasty.
 
 Python 2.7 as that's what Google provides
 
+This was created as part of the interview process with
+[Potato](https://p.ota.to/). It was initially private but seems like
+it may as well be public.
+
 How
 ===
 
